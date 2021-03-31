@@ -23,13 +23,16 @@ def ping():
 # basic users http requests.
 @app.route('/users', methods=['GET', 'POST', 'DELETE'])
 def users():
-    # return specific user.
+    search_id = request.args.get('id')
     if request.method == "GET":
-        search_id = request.args.get('id')
-        user = mongoDB_collection.find_one({"_id": ObjectId(search_id)})
-        return user
-    # return all users.
-    users = list(mongoDB_collection.find())
-    for user in users:
-        user["_id"] = str(user["_id"])
-    return { "users": users }
+        # return specific user.
+        if search_id:
+            user = mongoDB_collection.find_one({"_id": ObjectId(search_id)})
+            user["_id"] = str(user["_id"])
+            return { "users": user }
+        # return all users.
+        else:
+            users = list(mongoDB_collection.find())
+            for user in users:
+                user["_id"] = str(user["_id"])
+            return { "users": users }
