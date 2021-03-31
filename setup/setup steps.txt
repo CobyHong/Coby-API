@@ -4,8 +4,13 @@
 
 2. runtime.txt
 -decide what python version to run on
+-THIS IS OPTIONAL / NOT NEEDED
 
 3. Procfile.
 -web: gunicorn app: app
 -the first 'app' refers to the filename 'app.py'
 -the second 'app' refers to flask object 'app = flask.Flask(__name__)'
+
+4. Deploy on Heroku through Github branch
+
+5. https://coby-api.herokuapp.com/users
