@@ -1,0 +1,11 @@
+1. requirements.txt
+-just need flask for basics
+- gunicorn (a connector between flask framework, allow access like web server)
+
+2. runtime.txt
+-decide what python version to run on
+
+3. Procfile.
+-web: gunicorn app: app
+-the first 'app' refers to the filename 'app.py'
+-the second 'app' refers to flask object 'app = flask.Flask(__name__)'
