@@ -23,4 +23,4 @@ def users():
         users = list(mongoDB_collection.find())
         for user in users:
             user["_id"] = str(user["_id"])
-        return users
+        return { "users": users }
