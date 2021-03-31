@@ -1,6 +1,7 @@
 import flask
 import pymongo
 import os
+from bson import ObjectId
 
 # accept arguments.
 from flask import request
@@ -18,8 +19,12 @@ mongoDB_collection = mongoDB_connector["CobyBase"]["users"]
 def ping():
     return { "resp": "Coby API is online!" }
 
-@app.route('/users', methods=['GET'])
-def users():
+@app.route('/users', methods=['GET', 'POST', 'DELETE'])
+def users(id):
+    if request.method == "GET":
+        user = mongoDB_collection.find_one({"_id": ObjectId(id)})
+        return user
+    else:
         users = list(mongoDB_collection.find())
         for user in users:
             user["_id"] = str(user["_id"])
