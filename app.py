@@ -30,47 +30,37 @@ def users():
     if request.method == "GET":
         if search_id:
             user = mongoDB_collection.find_one({"_id": ObjectId(search_id)})
-            debug_print(user)
             if user:
                 user["_id"] = str(user["_id"])
                 return { "users": user }, 201
-            return flask.jsonify({"error": "User not found"}), 404
+            return {"error": "User not found"}, 404
         else:
             users = list(mongoDB_collection.find())
-            debug_print(users)
             if users:
                 for user in users:
                     user["_id"] = str(user["_id"])
                 return { "users": users }, 201
-            return flask.jsonify({"error": "users list empty"}), 404
+            return {"error": "users list empty"}, 404
 
     if request.method == "PUT":
         target_id = {"_id": ObjectId(search_id)}
         if search_name and search_desc:
             update_id = { "$set": { "name": search_name, "desc": search_desc } }
             resp = mongoDB_collection.update_one(target_id, update_id)
-            debug_print(resp)
             if resp:
-                return flask.jsonify({"success": "user updated"}), 204
-        return flask.jsonify({"error": "cannot update user"}), 404
+                return {"success": "user updated"}, 201
+        return {"error": "cannot update user"}, 404
         
     if request.method == "POST":
         new_user = request.get_json()
         resp = mongoDB_collection.insert(new_user)
-        debug_print(resp)
         if resp:
-            return flask.jsonify({"success": "user added"}), 204
-        return flask.jsonify({"error": "user insert failed"}), 404
+            return {"success": "user added"}, 201
+        return {"flask.error": "user insert failed"}, 404
 
     if request.method == "DELETE":
         if search_id:
             resp = mongoDB_collection.remove({"_id": ObjectId(search_id)})
-            debug_print(resp)
             if resp['n'] == 1:
-                return flask.jsonify({"success": "user removed"}), 204
-            return flask.jsonify({"error": "user not found"}), 404
-
-def debug_print(value):
-    print("==================")
-    print(value)
-    print("==================")
+                return {"success": "user removed"}, 201
+            return {"error": "user not found"}, 404
