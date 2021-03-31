@@ -17,3 +17,5 @@
 
 GET
 https://coby-api.herokuapp.com/users?id=1
+
+heroku logs --app coby-api --tail
