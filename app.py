@@ -20,4 +20,7 @@ def ping():
 
 @app.route('/users', methods=['GET'])
 def users():
-    return { "users": "This is a test"}
+        users = list(mongoDB_collection.find())
+        for user in users:
+            user["_id"] = str(user["_id"])
+        return users
