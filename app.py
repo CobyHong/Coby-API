@@ -20,12 +20,4 @@ def ping():
 
 @app.route('/users', methods=['GET'])
 def users():
-    return { "users": 1 }
-    # if request.method == 'GET':
-    #     user = request.args.get('id')
-    #     return { "users": 1 }
-    # else:
-    #     users= list(mongoDB_collection.find())
-    #     for user in users:
-    #         user["_id"] = str(user["_id"])
-    #     return {"users": users}
+    return { "users": "This is a test"}
