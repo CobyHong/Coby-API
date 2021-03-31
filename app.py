@@ -29,8 +29,7 @@ def users():
         user = mongoDB_collection.find_one({"_id": ObjectId(search_id)})
         return user
     # return all users.
-    else:
-        users = list(mongoDB_collection.find())
-        for user in users:
-            user["_id"] = str(user["_id"])
-        return { "users": users }
+    users = list(mongoDB_collection.find())
+    for user in users:
+        user["_id"] = str(user["_id"])
+    return { "users": users }
