@@ -14,3 +14,6 @@
 4. Deploy on Heroku through Github branch
 
 5. https://coby-api.herokuapp.com/users
+
+GET
+https://coby-api.herokuapp.com/users?id=1
