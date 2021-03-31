@@ -15,15 +15,20 @@ mongoDB_url = os.environ.get('MONGO_URL')
 mongoDB_connector = pymongo.MongoClient(mongoDB_url)
 mongoDB_collection = mongoDB_connector["CobyBase"]["users"]
 
+# default ping.
 @app.route('/', methods=['GET'])
 def ping():
     return { "resp": "Coby API is online!" }
 
+# basic users http requests.
 @app.route('/users', methods=['GET', 'POST', 'DELETE'])
-def users(id):
+def users():
+    # return specific user.
     if request.method == "GET":
-        user = mongoDB_collection.find_one({"_id": ObjectId(id)})
+        search_id = request.args.get('id')
+        user = mongoDB_collection.find_one({"_id": ObjectId(search_id)})
         return user
+    # return all users.
     else:
         users = list(mongoDB_collection.find())
         for user in users:
